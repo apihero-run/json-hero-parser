@@ -1,5 +1,5 @@
-class JSONHeroParser {
+import { JSONHeroPath } from '@jsonhero/path';
 
-}
+class JSONHeroParser {}
 
-export { JSONHeroParser }
+export { JSONHeroParser };
