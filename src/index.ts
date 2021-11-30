@@ -1,0 +1,5 @@
+class JSONHeroParser {
+
+}
+
+export { JSONHeroParser }
