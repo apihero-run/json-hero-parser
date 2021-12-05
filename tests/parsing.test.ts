@@ -63,3 +63,22 @@ describe('Values parsing tests', () => {
     expect(values.values['$.1.age'].value).toEqual(93);
   });
 });
+
+describe('Structure parsing tests', () => {
+  test('Parsing object', () => {
+    let parsedObject = parse(testObject1);
+    let structure = parsedObject.structure;
+
+    expect(structure.rootPath).toEqual('$');
+    expect(structure.values['$.people'].children?.length).toEqual(4);
+  });
+
+  test('Parsing array', () => {
+    let parsedObject = parse(testArray1);
+    let structure = parsedObject.structure;
+
+    expect(structure.rootPath).toEqual('$');
+    expect(structure.values['$.*'].children?.length).toEqual(3);
+    expect(structure.values['$.*.favouriteThings'].children?.length).toEqual(1);
+  });
+});

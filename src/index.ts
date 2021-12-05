@@ -1,6 +1,8 @@
 import { JSONHeroPath } from '@jsonhero/path';
 import { getType } from '@jsonhero/value-types';
-import { ParsedObject, ValueCollection, ValueInfo } from './structure';
+import { TypeName } from '@jsonhero/value-types/lib/type';
+import { WildcardPathComponent } from '@jsonhero/path/lib/path/wildcard-path-component';
+import { ParsedObject, StructureCollection, StructureInfo, ValueCollection, ValueInfo } from './structure';
 
 export function parse(object: any): ParsedObject {
   let rootPath = '$';
@@ -17,7 +19,7 @@ export function parse(object: any): ParsedObject {
   };
 
   buildValueTree(object, rootPath, parsedObject.values.values);
-
+  buildStructureTree(object, rootPath, 'Root', parsedObject.structure.values);
   return parsedObject;
 }
 
@@ -44,4 +46,42 @@ function buildValueTree(object: any, path: string, valueCollection: ValueCollect
       buildValueTree(child, childPath, valueCollection);
     }
   }
+}
+
+function buildStructureTree(rootObject: any, path: string, name: string, structureCollection: StructureCollection) {
+  let heroPath = new JSONHeroPath(path);
+  let results = heroPath.all(rootObject);
+  let isWildcard = heroPath.components[heroPath.components.length - 1] instanceof WildcardPathComponent;
+
+  let structureInfo: StructureInfo = {
+    path: path,
+    name: name,
+    type: getType(results[0]),
+    children: null,
+  };
+  structureCollection[path] = structureInfo;
+
+  results.forEach((result) => {
+    if (structureInfo.type.isCollection) {
+      let parentPath = new JSONHeroPath(path);
+      structureInfo.children = [];
+
+      if (structureInfo.type.primitiveType === TypeName.Array) {
+        let arrayChildPath = parentPath.child('*').toString();
+        if (!structureInfo.children.includes(arrayChildPath)) {
+          structureInfo.children.push(arrayChildPath);
+        }
+
+        buildStructureTree(rootObject, arrayChildPath, name, structureCollection);
+      } else {
+        for (const key in result) {
+          const child = result[key];
+          let childPath = parentPath.child(key).toString();
+          structureInfo.children.push(childPath);
+
+          buildStructureTree(rootObject, childPath, key, structureCollection);
+        }
+      }
+    }
+  });
 }

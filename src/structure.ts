@@ -21,4 +21,18 @@ export interface ValueInfo {
   children: string[] | null;
 }
 
-export interface Structure {}
+export interface Structure {
+  rootPath: string;
+  values: StructureCollection;
+}
+
+export interface StructureCollection {
+  [path: string]: StructureInfo;
+}
+
+export interface StructureInfo {
+  path: string;
+  name: string;
+  type: Type;
+  children: string[] | null;
+}
