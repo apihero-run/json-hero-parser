@@ -18,14 +18,15 @@ export function parse(object: any): ParsedObject {
     },
   };
 
-  buildValueTree(object, rootPath, parsedObject.values.values);
+  buildValueTree(object, rootPath, 'Root', parsedObject.values.values);
   buildStructureTree(object, rootPath, 'Root', parsedObject.structure.values);
   return parsedObject;
 }
 
-function buildValueTree(object: any, path: string, valueCollection: ValueCollection) {
+function buildValueTree(object: any, path: string, name: string, valueCollection: ValueCollection) {
   let valueInfo: ValueInfo = {
     path: path,
+    name: name,
     value: object,
     type: getType(object),
     children: null,
@@ -43,7 +44,12 @@ function buildValueTree(object: any, path: string, valueCollection: ValueCollect
       let childPath = parentPath.child(key).toString();
       valueInfo.children.push(childPath);
 
-      buildValueTree(child, childPath, valueCollection);
+      let childName = key;
+      if (valueInfo.type.primitiveType == TypeName.Array) {
+        childName = `${name} ${key}`;
+      }
+
+      buildValueTree(child, childPath, childName, valueCollection);
     }
   }
 }

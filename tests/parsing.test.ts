@@ -61,6 +61,7 @@ describe('Values parsing tests', () => {
     expect(values.rootPath).toEqual('$');
     expect(values.values['$'].children?.length).toEqual(4);
     expect(values.values['$.1.age'].value).toEqual(93);
+    expect(values.values['$.1'].name).toEqual('Root 1');
   });
 });
 

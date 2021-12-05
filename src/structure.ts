@@ -16,6 +16,7 @@ export interface ValueCollection {
 
 export interface ValueInfo {
   path: string;
+  name: string;
   value: any;
   type: Type;
   children: string[] | null;
