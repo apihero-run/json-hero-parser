@@ -1,6 +1,6 @@
 import { JSONHeroPath } from '@jsonhero/path';
 import { getType } from '@jsonhero/value-types';
-import { ParsedObject, ValueInfo } from './structure';
+import { ParsedObject, ValueCollection, ValueInfo } from './structure';
 
 export function parse(object: any): ParsedObject {
   let rootPath = '$';
@@ -10,14 +10,18 @@ export function parse(object: any): ParsedObject {
       rootPath: rootPath,
       values: {},
     },
-    structure: {},
+    structure: {
+      rootPath: rootPath,
+      values: {},
+    },
   };
 
-  buildTree(object, rootPath, parsedObject);
+  buildValueTree(object, rootPath, parsedObject.values.values);
+
   return parsedObject;
 }
 
-function buildTree(object: any, path: string, parsedObject: ParsedObject) {
+function buildValueTree(object: any, path: string, valueCollection: ValueCollection) {
   let valueInfo: ValueInfo = {
     path: path,
     value: object,
@@ -25,7 +29,7 @@ function buildTree(object: any, path: string, parsedObject: ParsedObject) {
     children: null,
   };
 
-  parsedObject.values.values[path] = valueInfo;
+  valueCollection[path] = valueInfo;
 
   //for any children add to children and then recursively run this
   if (valueInfo.type.isCollection) {
@@ -37,7 +41,7 @@ function buildTree(object: any, path: string, parsedObject: ParsedObject) {
       let childPath = parentPath.child(key).toString();
       valueInfo.children.push(childPath);
 
-      buildTree(child, childPath, parsedObject);
+      buildValueTree(child, childPath, valueCollection);
     }
   }
 }
