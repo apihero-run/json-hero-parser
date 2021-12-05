@@ -44,13 +44,22 @@ let testArray1 = [
   },
 ];
 
-describe('Object parsing test', () => {
-  test('Parsing', () => {
+describe('Values parsing tests', () => {
+  test('Parsing object', () => {
     let structure = parse(testObject1);
     let values = structure.values;
 
     expect(values.rootPath).toEqual('$');
     expect(values.values['$.people'].children?.length).toEqual(4);
     expect(values.values['$.people.James.age'].value).toEqual(93);
+  });
+
+  test('Parsing array', () => {
+    let structure = parse(testArray1);
+    let values = structure.values;
+
+    expect(values.rootPath).toEqual('$');
+    expect(values.values['$'].children?.length).toEqual(4);
+    expect(values.values['$.1.age'].value).toEqual(93);
   });
 });
