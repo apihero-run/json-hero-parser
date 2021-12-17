@@ -3,6 +3,7 @@ import { getType } from '@jsonhero/value-types';
 import { TypeName } from '@jsonhero/value-types/lib/type';
 import { WildcardPathComponent } from '@jsonhero/path/lib/path/wildcard-path-component';
 import { ParsedObject, StructureCollection, StructureInfo, ValueCollection, ValueInfo } from './structure';
+import { friendlyName } from './naming/naming';
 
 export function parse(object: any): ParsedObject {
   let rootPath = '$';
@@ -26,7 +27,7 @@ export function parse(object: any): ParsedObject {
 function buildValueTree(object: any, path: string, name: string, valueCollection: ValueCollection) {
   let valueInfo: ValueInfo = {
     path: path,
-    name: name,
+    name: friendlyName(name),
     value: object,
     type: getType(object),
     children: null,

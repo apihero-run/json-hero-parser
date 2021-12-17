@@ -83,3 +83,12 @@ describe('Structure parsing tests', () => {
     expect(structure.values['$.*.favouriteThings'].children?.length).toEqual(1);
   });
 });
+
+describe('Parsing name tests', () => {
+  test('Name test', () => {
+    let structure = parse(testObject1);
+    let values = structure.values;
+
+    expect(values.values['$.people.Matt.favouriteThings'].name).toEqual('Favourite Things');
+  });
+});
