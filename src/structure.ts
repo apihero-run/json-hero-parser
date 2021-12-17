@@ -17,6 +17,7 @@ export interface ValueCollection {
 export interface ValueInfo {
   path: string;
   name: string;
+  displayName: string;
   value: any;
   type: Type;
   children: string[] | null;
@@ -34,6 +35,7 @@ export interface StructureCollection {
 export interface StructureInfo {
   path: string;
   name: string;
+  displayName: string;
   type: Type;
   children: string[] | null;
 }

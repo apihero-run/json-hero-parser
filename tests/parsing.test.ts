@@ -44,6 +44,20 @@ let testArray1 = [
   },
 ];
 
+let employees = {
+  people: [
+    {
+      name: 'Matt',
+      age: 36,
+    },
+    {
+      name: 'James',
+      age: 39,
+    },
+  ],
+  count: 2,
+};
+
 describe('Values parsing tests', () => {
   test('Parsing object', () => {
     let structure = parse(testObject1);
@@ -62,6 +76,12 @@ describe('Values parsing tests', () => {
     expect(values.values['$'].children?.length).toEqual(4);
     expect(values.values['$.1.age'].value).toEqual(93);
     expect(values.values['$.1'].name).toEqual('Root 1');
+    expect(values.values['$.1'].displayName).toEqual('Root 1');
+  });
+
+  test('Parsing employees', () => {
+    let structure = parse(employees);
+    console.log(JSON.stringify(structure));
   });
 });
 
@@ -89,6 +109,7 @@ describe('Parsing name tests', () => {
     let structure = parse(testObject1);
     let values = structure.values;
 
-    expect(values.values['$.people.Matt.favouriteThings'].name).toEqual('Favourite Things');
+    expect(values.values['$.people.Matt.favouriteThings'].name).toEqual('favouriteThings');
+    expect(values.values['$.people.Matt.favouriteThings'].displayName).toEqual('Favourite Things');
   });
 });

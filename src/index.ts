@@ -27,7 +27,8 @@ export function parse(object: any): ParsedObject {
 function buildValueTree(object: any, path: string, name: string, valueCollection: ValueCollection) {
   let valueInfo: ValueInfo = {
     path: path,
-    name: friendlyName(name),
+    name: name,
+    displayName: friendlyName(name),
     value: object,
     type: getType(object),
     children: null,
@@ -63,6 +64,7 @@ function buildStructureTree(rootObject: any, path: string, name: string, structu
   let structureInfo: StructureInfo = {
     path: path,
     name: name,
+    displayName: friendlyName(name),
     type: getType(results[0]),
     children: null,
   };
