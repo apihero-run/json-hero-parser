@@ -1,6 +1,6 @@
 {
   "name": "@jsonhero/parser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A parser that walks through a JSON file and for each value determines the path to it, the type and paths to any children. It also builds a model of the structure of the data.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
