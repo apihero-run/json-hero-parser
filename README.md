@@ -66,7 +66,7 @@ They have the following properties for each element:
 | `name`        | The originally formatted name                          |
 | `displayName` | A nicely formatted name                                |
 | `value`       | The value itself                                       |
-| `type`        | A `Type` from JSON Hero's value types package          |
+| `type`        | A `Type` from JSON Hero's infer types package          |
 | `children`    | `Null` or an array of string paths to child values     |
 
 ### The output
@@ -89,13 +89,7 @@ This produces an object that looks like this:
           ],
           "count": 2
         },
-        "type": {
-          "primitiveType": "Object",
-          "isCollection": true,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "object" },
         "children": ["$.people", "$.count"]
       },
       "$.people": {
@@ -106,13 +100,7 @@ This produces an object that looks like this:
           { "name": "Matt", "age": 36 },
           { "name": "James", "age": 39 }
         ],
-        "type": {
-          "primitiveType": "Array",
-          "isCollection": true,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "array" },
         "children": ["$.people.0", "$.people.1"]
       },
       "$.people.0": {
@@ -120,13 +108,7 @@ This produces an object that looks like this:
         "name": "people 0",
         "displayName": "People 0",
         "value": { "name": "Matt", "age": 36 },
-        "type": {
-          "primitiveType": "Object",
-          "isCollection": true,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "object" },
         "children": ["$.people.0.name", "$.people.0.age"]
       },
       "$.people.0.name": {
@@ -134,13 +116,7 @@ This produces an object that looks like this:
         "name": "name",
         "displayName": "Name",
         "value": "Matt",
-        "type": {
-          "primitiveType": "String",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "string" },
         "children": null
       },
       "$.people.0.age": {
@@ -148,13 +124,7 @@ This produces an object that looks like this:
         "name": "age",
         "displayName": "Age",
         "value": 36,
-        "type": {
-          "primitiveType": "Number",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "int" },
         "children": null
       },
       "$.people.1": {
@@ -162,13 +132,7 @@ This produces an object that looks like this:
         "name": "people 1",
         "displayName": "People 1",
         "value": { "name": "James", "age": 39 },
-        "type": {
-          "primitiveType": "Object",
-          "isCollection": true,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "object" },
         "children": ["$.people.1.name", "$.people.1.age"]
       },
       "$.people.1.name": {
@@ -176,13 +140,7 @@ This produces an object that looks like this:
         "name": "name",
         "displayName": "Name",
         "value": "James",
-        "type": {
-          "primitiveType": "String",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "string" },
         "children": null
       },
       "$.people.1.age": {
@@ -190,13 +148,7 @@ This produces an object that looks like this:
         "name": "age",
         "displayName": "Age",
         "value": 39,
-        "type": {
-          "primitiveType": "Number",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "int" },
         "children": null
       },
       "$.count": {
@@ -204,13 +156,7 @@ This produces an object that looks like this:
         "name": "count",
         "displayName": "Count",
         "value": 2,
-        "type": {
-          "primitiveType": "Number",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "int" },
         "children": null
       }
     }
@@ -222,78 +168,42 @@ This produces an object that looks like this:
         "path": "$",
         "name": "Root",
         "displayName": "Root",
-        "type": {
-          "primitiveType": "Object",
-          "isCollection": true,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "object" },
         "children": ["$.people", "$.count"]
       },
       "$.people": {
         "path": "$.people",
         "name": "people",
         "displayName": "People",
-        "type": {
-          "primitiveType": "Array",
-          "isCollection": true,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "array" },
         "children": ["$.people.*"]
       },
       "$.people.*": {
         "path": "$.people.*",
         "name": "people",
         "displayName": "People",
-        "type": {
-          "primitiveType": "Object",
-          "isCollection": true,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "object" },
         "children": ["$.people.*.name", "$.people.*.age"]
       },
       "$.people.*.name": {
         "path": "$.people.*.name",
         "name": "name",
         "displayName": "Name",
-        "type": {
-          "primitiveType": "String",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "string" },
         "children": null
       },
       "$.people.*.age": {
         "path": "$.people.*.age",
         "name": "age",
         "displayName": "Age",
-        "type": {
-          "primitiveType": "Number",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "int" },
         "children": null
       },
       "$.count": {
         "path": "$.count",
         "name": "count",
         "displayName": "Count",
-        "type": {
-          "primitiveType": "Number",
-          "isCollection": false,
-          "hasSecondaryType": false,
-          "hasTertiaryType": false,
-          "tertiaryType": null
-        },
+        "type": { "name": "int" },
         "children": null
       }
     }

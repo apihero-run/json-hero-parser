@@ -1,6 +1,6 @@
 import { JSONHeroPath } from '@jsonhero/path';
-import { getType } from '@jsonhero/value-types';
-import { TypeName } from '@jsonhero/value-types/lib/type';
+import { inferType } from '@jsonhero/json-infer-types';
+import { JSONValueType } from '@jsonhero/json-infer-types/lib/@types';
 import { WildcardPathComponent } from '@jsonhero/path/lib/path/wildcard-path-component';
 import { ParsedObject, StructureCollection, StructureInfo, ValueCollection, ValueInfo } from './structure';
 import { friendlyName } from './naming/naming';
@@ -30,14 +30,14 @@ function buildValueTree(object: any, path: string, name: string, valueCollection
     name: name,
     displayName: friendlyName(name),
     value: object,
-    type: getType(object),
+    type: inferType(object, { shallow: true }),
     children: null,
   };
 
   valueCollection[path] = valueInfo;
 
   //for any children add to children and then recursively run this
-  if (valueInfo.type.isCollection) {
+  if (isCollection(valueInfo.type)) {
     let parentPath = new JSONHeroPath(path);
     valueInfo.children = [];
 
@@ -47,7 +47,7 @@ function buildValueTree(object: any, path: string, name: string, valueCollection
       valueInfo.children.push(childPath);
 
       let childName = key;
-      if (valueInfo.type.primitiveType == TypeName.Array) {
+      if (valueInfo.type.name === 'array') {
         childName = `${name} ${key}`;
       }
 
@@ -65,17 +65,17 @@ function buildStructureTree(rootObject: any, path: string, name: string, structu
     path: path,
     name: name,
     displayName: friendlyName(name),
-    type: getType(results[0]),
+    type: inferType(results[0], { shallow: true }),
     children: null,
   };
   structureCollection[path] = structureInfo;
 
   results.forEach((result) => {
-    if (structureInfo.type.isCollection) {
+    if (isCollection(structureInfo.type)) {
       let parentPath = new JSONHeroPath(path);
       structureInfo.children = [];
 
-      if (structureInfo.type.primitiveType === TypeName.Array) {
+      if (structureInfo.type.name === 'array') {
         let arrayChildPath = parentPath.child('*').toString();
         if (!structureInfo.children.includes(arrayChildPath)) {
           structureInfo.children.push(arrayChildPath);
@@ -93,4 +93,8 @@ function buildStructureTree(rootObject: any, path: string, name: string, structu
       }
     }
   });
+}
+
+function isCollection(type: JSONValueType) {
+  return type.name === 'array' || type.name === 'object';
 }

@@ -47,7 +47,7 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "@jsonhero/path": "^1.0.6",
-    "@jsonhero/value-types": "^1.0.0"
+    "@jsonhero/json-infer-types": "^0.1.0",
+    "@jsonhero/path": "^1.0.6"
   }
 }

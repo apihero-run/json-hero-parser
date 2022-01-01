@@ -1,4 +1,4 @@
-import { Type } from '@jsonhero/value-types/lib/type';
+import { JSONValueType } from '@jsonhero/json-infer-types/lib/@types';
 
 export interface ParsedObject {
   values: Values;
@@ -19,7 +19,7 @@ export interface ValueInfo {
   name: string;
   displayName: string;
   value: any;
-  type: Type;
+  type: JSONValueType;
   children: string[] | null;
 }
 
@@ -36,6 +36,6 @@ export interface StructureInfo {
   path: string;
   name: string;
   displayName: string;
-  type: Type;
+  type: JSONValueType;
   children: string[] | null;
 }
