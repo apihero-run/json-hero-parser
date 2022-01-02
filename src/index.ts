@@ -1,6 +1,6 @@
 import { JSONHeroPath } from '@jsonhero/path';
 import { inferType } from '@jsonhero/json-infer-types';
-import { JSONValueType } from '@jsonhero/json-infer-types/lib/@types';
+import { JSONValueType } from '@jsonhero/json-infer-types';
 import { WildcardPathComponent } from '@jsonhero/path/lib/path/wildcard-path-component';
 import { ParsedObject, StructureCollection, StructureInfo, ValueCollection, ValueInfo } from './structure';
 import { friendlyName } from './naming/naming';
@@ -25,6 +25,7 @@ export function parse(object: any): ParsedObject {
 }
 
 export { ParsedObject } from './structure';
+export { JSONValueType };
 
 function buildValueTree(object: any, path: string, name: string, valueCollection: ValueCollection) {
   let valueInfo: ValueInfo = {
