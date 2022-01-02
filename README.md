@@ -89,7 +89,16 @@ This produces an object that looks like this:
           ],
           "count": 2
         },
-        "type": { "name": "object" },
+        "type": {
+          "name": "object",
+          "value": {
+            "people": [
+              { "name": "Matt", "age": 36 },
+              { "name": "James", "age": 39 }
+            ],
+            "count": 2
+          }
+        },
         "children": ["$.people", "$.count"]
       },
       "$.people": {
@@ -100,7 +109,13 @@ This produces an object that looks like this:
           { "name": "Matt", "age": 36 },
           { "name": "James", "age": 39 }
         ],
-        "type": { "name": "array" },
+        "type": {
+          "name": "array",
+          "value": [
+            { "name": "Matt", "age": 36 },
+            { "name": "James", "age": 39 }
+          ]
+        },
         "children": ["$.people.0", "$.people.1"]
       },
       "$.people.0": {
@@ -108,7 +123,7 @@ This produces an object that looks like this:
         "name": "people 0",
         "displayName": "People 0",
         "value": { "name": "Matt", "age": 36 },
-        "type": { "name": "object" },
+        "type": { "name": "object", "value": { "name": "Matt", "age": 36 } },
         "children": ["$.people.0.name", "$.people.0.age"]
       },
       "$.people.0.name": {
@@ -116,7 +131,7 @@ This produces an object that looks like this:
         "name": "name",
         "displayName": "Name",
         "value": "Matt",
-        "type": { "name": "string" },
+        "type": { "name": "string", "value": "Matt" },
         "children": null
       },
       "$.people.0.age": {
@@ -124,7 +139,7 @@ This produces an object that looks like this:
         "name": "age",
         "displayName": "Age",
         "value": 36,
-        "type": { "name": "int" },
+        "type": { "name": "int", "value": 36 },
         "children": null
       },
       "$.people.1": {
@@ -132,7 +147,7 @@ This produces an object that looks like this:
         "name": "people 1",
         "displayName": "People 1",
         "value": { "name": "James", "age": 39 },
-        "type": { "name": "object" },
+        "type": { "name": "object", "value": { "name": "James", "age": 39 } },
         "children": ["$.people.1.name", "$.people.1.age"]
       },
       "$.people.1.name": {
@@ -140,7 +155,7 @@ This produces an object that looks like this:
         "name": "name",
         "displayName": "Name",
         "value": "James",
-        "type": { "name": "string" },
+        "type": { "name": "string", "value": "James" },
         "children": null
       },
       "$.people.1.age": {
@@ -148,7 +163,7 @@ This produces an object that looks like this:
         "name": "age",
         "displayName": "Age",
         "value": 39,
-        "type": { "name": "int" },
+        "type": { "name": "int", "value": 39 },
         "children": null
       },
       "$.count": {
@@ -156,7 +171,7 @@ This produces an object that looks like this:
         "name": "count",
         "displayName": "Count",
         "value": 2,
-        "type": { "name": "int" },
+        "type": { "name": "int", "value": 2 },
         "children": null
       }
     }
@@ -168,42 +183,57 @@ This produces an object that looks like this:
         "path": "$",
         "name": "Root",
         "displayName": "Root",
-        "type": { "name": "object" },
+        "type": {
+          "name": "object",
+          "value": {
+            "people": [
+              { "name": "Matt", "age": 36 },
+              { "name": "James", "age": 39 }
+            ],
+            "count": 2
+          }
+        },
         "children": ["$.people", "$.count"]
       },
       "$.people": {
         "path": "$.people",
         "name": "people",
         "displayName": "People",
-        "type": { "name": "array" },
+        "type": {
+          "name": "array",
+          "value": [
+            { "name": "Matt", "age": 36 },
+            { "name": "James", "age": 39 }
+          ]
+        },
         "children": ["$.people.*"]
       },
       "$.people.*": {
         "path": "$.people.*",
         "name": "people",
         "displayName": "People",
-        "type": { "name": "object" },
+        "type": { "name": "object", "value": { "name": "Matt", "age": 36 } },
         "children": ["$.people.*.name", "$.people.*.age"]
       },
       "$.people.*.name": {
         "path": "$.people.*.name",
         "name": "name",
         "displayName": "Name",
-        "type": { "name": "string" },
+        "type": { "name": "string", "value": "Matt" },
         "children": null
       },
       "$.people.*.age": {
         "path": "$.people.*.age",
         "name": "age",
         "displayName": "Age",
-        "type": { "name": "int" },
+        "type": { "name": "int", "value": 36 },
         "children": null
       },
       "$.count": {
         "path": "$.count",
         "name": "count",
         "displayName": "Count",
-        "type": { "name": "int" },
+        "type": { "name": "int", "value": 2 },
         "children": null
       }
     }

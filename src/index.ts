@@ -30,7 +30,7 @@ function buildValueTree(object: any, path: string, name: string, valueCollection
     name: name,
     displayName: friendlyName(name),
     value: object,
-    type: inferType(object, { shallow: true }),
+    type: inferType(object),
     children: null,
   };
 
@@ -65,7 +65,7 @@ function buildStructureTree(rootObject: any, path: string, name: string, structu
     path: path,
     name: name,
     displayName: friendlyName(name),
-    type: inferType(results[0], { shallow: true }),
+    type: inferType(results[0]),
     children: null,
   };
   structureCollection[path] = structureInfo;
