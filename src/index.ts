@@ -24,6 +24,8 @@ export function parse(object: any): ParsedObject {
   return parsedObject;
 }
 
+export { ParsedObject } from './structure';
+
 function buildValueTree(object: any, path: string, name: string, valueCollection: ValueCollection) {
   let valueInfo: ValueInfo = {
     path: path,
