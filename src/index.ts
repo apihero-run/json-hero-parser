@@ -6,9 +6,9 @@ import { ParsedObject, StructureCollection, StructureInfo, ValueCollection, Valu
 import { friendlyName } from './naming/naming';
 
 export function parse(object: any): ParsedObject {
-  let rootPath = '$';
+  const rootPath = '$';
 
-  let parsedObject: ParsedObject = {
+  const parsedObject: ParsedObject = {
     values: {
       rootPath: rootPath,
       values: {},
@@ -28,7 +28,7 @@ export { ParsedObject } from './structure';
 export { JSONValueType };
 
 function buildValueTree(object: any, path: string, name: string, valueCollection: ValueCollection) {
-  let valueInfo: ValueInfo = {
+  const valueInfo: ValueInfo = {
     path: path,
     name: name,
     displayName: friendlyName(name),
@@ -41,12 +41,12 @@ function buildValueTree(object: any, path: string, name: string, valueCollection
 
   //for any children add to children and then recursively run this
   if (isCollection(valueInfo.type)) {
-    let parentPath = new JSONHeroPath(path);
+    const parentPath = new JSONHeroPath(path);
     valueInfo.children = [];
 
     for (const key in object) {
       const child = object[key];
-      let childPath = parentPath.child(key).toString();
+      const childPath = parentPath.child(key).toString();
       valueInfo.children.push(childPath);
 
       let childName = key;
@@ -60,11 +60,11 @@ function buildValueTree(object: any, path: string, name: string, valueCollection
 }
 
 function buildStructureTree(rootObject: any, path: string, name: string, structureCollection: StructureCollection) {
-  let heroPath = new JSONHeroPath(path);
-  let results = heroPath.all(rootObject);
-  let isWildcard = heroPath.components[heroPath.components.length - 1] instanceof WildcardPathComponent;
+  const heroPath = new JSONHeroPath(path);
+  const results = heroPath.all(rootObject);
+  const isWildcard = heroPath.components[heroPath.components.length - 1] instanceof WildcardPathComponent;
 
-  let structureInfo: StructureInfo = {
+  const structureInfo: StructureInfo = {
     path: path,
     name: name,
     displayName: friendlyName(name),
@@ -75,11 +75,11 @@ function buildStructureTree(rootObject: any, path: string, name: string, structu
 
   results.forEach((result) => {
     if (isCollection(structureInfo.type)) {
-      let parentPath = new JSONHeroPath(path);
+      const parentPath = new JSONHeroPath(path);
       structureInfo.children = [];
 
       if (structureInfo.type.name === 'array') {
-        let arrayChildPath = parentPath.child('*').toString();
+        const arrayChildPath = parentPath.child('*').toString();
         if (!structureInfo.children.includes(arrayChildPath)) {
           structureInfo.children.push(arrayChildPath);
         }
@@ -88,7 +88,7 @@ function buildStructureTree(rootObject: any, path: string, name: string, structu
       } else {
         for (const key in result) {
           const child = result[key];
-          let childPath = parentPath.child(key).toString();
+          const childPath = parentPath.child(key).toString();
           structureInfo.children.push(childPath);
 
           buildStructureTree(rootObject, childPath, key, structureCollection);

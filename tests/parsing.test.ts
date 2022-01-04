@@ -1,6 +1,6 @@
 import { parse } from '../src/index';
 
-let testObject1 = {
+const testObject1 = {
   people: {
     Matt: {
       age: 36,
@@ -21,7 +21,7 @@ let testObject1 = {
   },
 };
 
-let testArray1 = [
+const testArray1 = [
   {
     name: 'Matt',
     age: 36,
@@ -44,7 +44,7 @@ let testArray1 = [
   },
 ];
 
-let employees = {
+const employees = {
   people: [
     {
       name: 'Matt',
@@ -60,8 +60,8 @@ let employees = {
 
 describe('Values parsing tests', () => {
   test('Parsing object', () => {
-    let structure = parse(testObject1);
-    let values = structure.values;
+    const structure = parse(testObject1);
+    const values = structure.values;
 
     expect(values.rootPath).toEqual('$');
     expect(values.values['$.people'].children?.length).toEqual(4);
@@ -69,8 +69,8 @@ describe('Values parsing tests', () => {
   });
 
   test('Parsing array', () => {
-    let structure = parse(testArray1);
-    let values = structure.values;
+    const structure = parse(testArray1);
+    const values = structure.values;
 
     expect(values.rootPath).toEqual('$');
     expect(values.values['$'].children?.length).toEqual(4);
@@ -80,23 +80,23 @@ describe('Values parsing tests', () => {
   });
 
   test('Parsing employees', () => {
-    let structure = parse(employees);
+    const structure = parse(employees);
     console.log(JSON.stringify(structure));
   });
 });
 
 describe('Structure parsing tests', () => {
   test('Parsing object', () => {
-    let parsedObject = parse(testObject1);
-    let structure = parsedObject.structure;
+    const parsedObject = parse(testObject1);
+    const structure = parsedObject.structure;
 
     expect(structure.rootPath).toEqual('$');
     expect(structure.values['$.people'].children?.length).toEqual(4);
   });
 
   test('Parsing array', () => {
-    let parsedObject = parse(testArray1);
-    let structure = parsedObject.structure;
+    const parsedObject = parse(testArray1);
+    const structure = parsedObject.structure;
 
     expect(structure.rootPath).toEqual('$');
     expect(structure.values['$.*'].children?.length).toEqual(3);
@@ -106,8 +106,8 @@ describe('Structure parsing tests', () => {
 
 describe('Parsing name tests', () => {
   test('Name test', () => {
-    let structure = parse(testObject1);
-    let values = structure.values;
+    const structure = parse(testObject1);
+    const values = structure.values;
 
     expect(values.values['$.people.Matt.favouriteThings'].name).toEqual('favouriteThings');
     expect(values.values['$.people.Matt.favouriteThings'].displayName).toEqual('Favourite Things');
