@@ -20,7 +20,6 @@ export function parse(object: any): ParsedObject {
   };
 
   buildValueTree(object, rootPath, 'Root', parsedObject.values.values);
-  buildStructureTree(object, rootPath, 'Root', parsedObject.structure.values);
   return parsedObject;
 }
 
@@ -57,45 +56,6 @@ function buildValueTree(object: any, path: string, name: string, valueCollection
       buildValueTree(child, childPath, childName, valueCollection);
     }
   }
-}
-
-function buildStructureTree(rootObject: any, path: string, name: string, structureCollection: StructureCollection) {
-  const heroPath = new JSONHeroPath(path);
-  const results = heroPath.all(rootObject);
-  const isWildcard = heroPath.components[heroPath.components.length - 1] instanceof WildcardPathComponent;
-
-  const structureInfo: StructureInfo = {
-    path: path,
-    name: name,
-    displayName: friendlyName(name),
-    type: inferType(results[0]),
-    children: null,
-  };
-  structureCollection[path] = structureInfo;
-
-  results.forEach((result) => {
-    if (isCollection(structureInfo.type)) {
-      const parentPath = new JSONHeroPath(path);
-      structureInfo.children = [];
-
-      if (structureInfo.type.name === 'array') {
-        const arrayChildPath = parentPath.child('*').toString();
-        if (!structureInfo.children.includes(arrayChildPath)) {
-          structureInfo.children.push(arrayChildPath);
-        }
-
-        buildStructureTree(rootObject, arrayChildPath, name, structureCollection);
-      } else {
-        for (const key in result) {
-          const child = result[key];
-          const childPath = parentPath.child(key).toString();
-          structureInfo.children.push(childPath);
-
-          buildStructureTree(rootObject, childPath, key, structureCollection);
-        }
-      }
-    }
-  });
 }
 
 function isCollection(type: JSONValueType) {

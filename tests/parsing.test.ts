@@ -85,25 +85,6 @@ describe('Values parsing tests', () => {
   });
 });
 
-describe('Structure parsing tests', () => {
-  test('Parsing object', () => {
-    const parsedObject = parse(testObject1);
-    const structure = parsedObject.structure;
-
-    expect(structure.rootPath).toEqual('$');
-    expect(structure.values['$.people'].children?.length).toEqual(4);
-  });
-
-  test('Parsing array', () => {
-    const parsedObject = parse(testArray1);
-    const structure = parsedObject.structure;
-
-    expect(structure.rootPath).toEqual('$');
-    expect(structure.values['$.*'].children?.length).toEqual(3);
-    expect(structure.values['$.*.favouriteThings'].children?.length).toEqual(1);
-  });
-});
-
 describe('Parsing name tests', () => {
   test('Name test', () => {
     const structure = parse(testObject1);
